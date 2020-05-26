@@ -1,0 +1,6 @@
+
+{
+  "template": "keepachangelog",
+  "ignoreCommitPattern": "^Publish$|^Update README.md$|^Update CHANGELOG.md$",
+  "commitLimit": false
+}

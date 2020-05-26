@@ -1,0 +1,21 @@
+{
+  "name": "@pcdiff/parser-core",
+  "publishConfig": {
+    "access": "public"
+  },
+  "version": "0.0.1",
+  "description": "",
+  "main": "bin/index.js",
+  "files": [
+    "bin"
+  ],
+  "scripts": {
+    "build": "babel ./src -d bin --copy-files"
+  },
+  "author": {
+    "name": "Tyreal Gray",
+    "email": "tyrealgray@ymail.com",
+    "url": "https://tyrealgray.github.io/BytePlanet/"
+  },
+  "license": "OSL-3.0"
+}
