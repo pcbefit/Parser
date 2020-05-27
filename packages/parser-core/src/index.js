@@ -1,1 +1,1 @@
-console.log('parser-core');
+export { Parser } from 'Parser';
