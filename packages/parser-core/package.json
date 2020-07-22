@@ -12,6 +12,7 @@
 	"scripts": {
 		"build": "babel ./src -d bin --copy-files",
 		"lint": "eslint ./src",
+		"lint:fix": "eslint ./src --fix",
 		"test": "jest"
 	},
 	"author": {

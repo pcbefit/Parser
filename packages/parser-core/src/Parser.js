@@ -2,7 +2,6 @@ import { LEVEL } from './type';
 
 class Parser {
 	constructor() {
-
 		this._ignoreNonCoreComponents = true;
 
 		this._currentSetup = {
@@ -33,10 +32,7 @@ class Parser {
 	}
 
 	checkPlatformMismatch() {
-		const {
-			motherboard,
-			CPU,
-		} = this._currentSetup;
+		const { motherboard, CPU } = this._currentSetup;
 
 		return !(CPU && motherboard && CPU.platform === motherboard.platform);
 	}
@@ -61,9 +57,9 @@ class Parser {
 
 		if (this._ignoreNonCoreComponents) {
 			checkList = [motherboard, CPU, GPU, ram, SSD];
-		}
-		else {
-			checkList = [motherboard,
+		} else {
+			checkList = [
+				motherboard,
 				CPU,
 				cooler,
 				GPU,
@@ -71,7 +67,8 @@ class Parser {
 				SSD,
 				hardDrive,
 				chassis,
-				ROM];
+				ROM,
+			];
 		}
 
 		for (let index = 0; index < checkList.length; ++index) {
@@ -82,12 +79,14 @@ class Parser {
 				continue;
 			}
 
+
 			if (level !== lastLevel) {
 				isMismatch = true;
+
 				mismatchType = {
 					...mismatchType,
-					[checkList[index]?.type]: true,
-					[checkList[index - 1]?.type]: true,
+					[this.getType(checkList[index])]: true,
+					[this.getType(checkList[index - 1])]: true,
 				};
 			}
 
@@ -102,13 +101,29 @@ class Parser {
 			};
 		}
 
-		const mismatchComponents = [];
+		let mismatchComponents = [];
 		Object.keys(mismatchType).forEach((type) => {
-			if(type !== 'undefined') {
+			if (type !== 'undefined') {
 				mismatchComponents.push(this._currentSetup[type]);
 			}
 		});
-		mismatchComponents.flat();
+
+		const flattenArray = (data) => {
+
+			const iter = (r, a) => {
+				if (a === null) {
+					return r;
+				}
+				if (Array.isArray(a)) {
+					return a.reduce(iter, r);
+				}
+				return r.concat(a);
+			};
+
+			return data.reduce(iter, []);
+		};
+
+		mismatchComponents = flattenArray(mismatchComponents);
 
 		return { isMismatch, mismatchComponents };
 	}
@@ -152,8 +167,17 @@ class Parser {
 		return this._currentSetup.CPU;
 	}
 
-	getLevel(components) {
+	getType(components) {
+		const multiComponents = components?.length;
 
+		if (multiComponents) {
+			return components[0].type;
+		}
+
+		return (components?.type);
+	}
+
+	getLevel(components) {
 		const multiComponents = components?.length;
 
 		if (multiComponents) {
@@ -176,11 +200,9 @@ class Parser {
 
 		if (components?.type) {
 			return this.getComponentLevel(components);
-		}
-		else {
+		} else {
 			return LEVEL.M;
 		}
-
 	}
 
 	getComponentLevel(component) {

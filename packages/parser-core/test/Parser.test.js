@@ -1,5 +1,6 @@
 import { Parser } from '../src/Parser';
 import { AMD_CORE, AMD_SOCKET, COMPONENT, LEVEL, PLATFORM } from '../src/type';
+import { INTEL_GPU } from '../src/type/gpuCore';
 
 describe('Parser', () => {
 	let parser = null;
@@ -23,7 +24,14 @@ describe('Parser', () => {
 				type: COMPONENT.CPU,
 				fits: [],
 			},
-			GPU: [],
+			GPU: [{
+				name: 'Iris Plus Graphics 655',
+				core: INTEL_GPU.Iris_Plus_Graphics_655,
+				type: COMPONENT.GPU,
+				score: 400,
+				fits: [],
+				wattage: 28,
+			}],
 			ram: [],
 			SSD: [],
 			hardDrive: [],
@@ -54,6 +62,10 @@ describe('Parser', () => {
 		const cpuLevel = parser.getLevel(parser.CPU);
 
 		expect(cpuLevel).toEqual(LEVEL.G);
+
+		const gpuLevel = parser.getLevel(parser.GPU);
+
+		expect(gpuLevel).toEqual(LEVEL.M);
 	});
 
 	it('should find mismatch setup', function () {
@@ -75,6 +87,14 @@ describe('Parser', () => {
 			{
 				platform: PLATFORM.INTEL,
 				type: COMPONENT.MOTHERBOARD,
+			},
+			{
+				name: 'Iris Plus Graphics 655',
+				core: INTEL_GPU.Iris_Plus_Graphics_655,
+				type: COMPONENT.GPU,
+				score: 400,
+				fits: [],
+				wattage: 28,
 			},
 		]));
 	});

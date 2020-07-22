@@ -37,5 +37,12 @@
         "allowTemplateLiterals": true
       }
     ]
+  },
+  "globals":{
+    "it": true,
+    "expect": true,
+    "describe": true,
+    "beforeEach": true,
+    "afterEach": true
   }
 }

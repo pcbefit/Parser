@@ -3,7 +3,7 @@ const LEVEL = {
 	G:'Game',
 	B:'Business',
 	E:'Economy',
-	M:'Mismatch'
+	M:'Mismatch',
 };
 
 export {LEVEL};

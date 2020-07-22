@@ -1,6 +1,6 @@
 const PLATFORM = {
 	AMD:'a',
-	INTEL:'i'
+	INTEL:'i',
 };
 
 export {PLATFORM};
