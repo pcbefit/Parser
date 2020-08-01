@@ -79,7 +79,6 @@ class Parser {
 				continue;
 			}
 
-
 			if (level !== lastLevel) {
 				isMismatch = true;
 

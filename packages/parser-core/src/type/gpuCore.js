@@ -6,8 +6,6 @@ const AMD_GPU = {
 	RX_550: 'RX_550',
 };
 
-const INTEL_GPU = {
-	Iris_Plus_Graphics_655: 'Iris_Plus_Graphics_655',
-};
+const INTEL_GPU = 'INTEL_GPU';
 
 export {NVIDIA_GPU, AMD_GPU, INTEL_GPU};

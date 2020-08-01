@@ -3,12 +3,14 @@ import { AMD_CORE, AMD_SOCKET, COMPONENT, LEVEL, PLATFORM } from '../src/type';
 import { INTEL_GPU } from '../src/type/gpuCore';
 
 describe('Parser', () => {
-	let parser = null;
+	let parserA = null;
+	let parserB = null;
 
 	beforeEach(() => {
-		parser = new Parser();
+		parserA = new Parser();
+		parserB = new Parser();
 
-		parser.load({
+		parserA.load({
 			motherboard: {
 				platform: PLATFORM.INTEL,
 				type: COMPONENT.MOTHERBOARD,
@@ -26,7 +28,7 @@ describe('Parser', () => {
 			},
 			GPU: [{
 				name: 'Iris Plus Graphics 655',
-				core: INTEL_GPU.Iris_Plus_Graphics_655,
+				core: INTEL_GPU,
 				type: COMPONENT.GPU,
 				score: 400,
 				fits: [],
@@ -40,7 +42,7 @@ describe('Parser', () => {
 			cooler: null,
 		});
 
-		parser.setLevelStandard({
+		parserA.setLevelStandard({
 			CPU: {
 				B: 500,
 				W: 2000,
@@ -50,26 +52,29 @@ describe('Parser', () => {
 	});
 
 	afterEach(() => {
-		parser = null;
+		parserA = null;
+		parserB = null;
 	});
 
 	it('should load component json correctly', () => {
-		parser.load({});
-		expect(parser.currentSetup()).toEqual({});
+		parserA.load({});
+		parserB.load({});
+		expect(parserA.currentSetup()).toEqual({});
+		expect(parserB.currentSetup()).toEqual({});
 	});
 
 	it('should get component level correctly', () => {
-		const cpuLevel = parser.getLevel(parser.CPU);
+		const cpuLevel = parserA.getLevel(parserA.CPU);
 
 		expect(cpuLevel).toEqual(LEVEL.G);
 
-		const gpuLevel = parser.getLevel(parser.GPU);
+		const gpuLevel = parserA.getLevel(parserA.GPU);
 
 		expect(gpuLevel).toEqual(LEVEL.M);
 	});
 
 	it('should find mismatch setup', function () {
-		const mismatch = parser.checkSetupMismatch();
+		const mismatch = parserA.checkSetupMismatch();
 
 		expect(mismatch.isMismatch).toEqual(true);
 		expect(mismatch.mismatchComponents).toEqual(expect.arrayContaining([
@@ -90,7 +95,7 @@ describe('Parser', () => {
 			},
 			{
 				name: 'Iris Plus Graphics 655',
-				core: INTEL_GPU.Iris_Plus_Graphics_655,
+				core: INTEL_GPU,
 				type: COMPONENT.GPU,
 				score: 400,
 				fits: [],
